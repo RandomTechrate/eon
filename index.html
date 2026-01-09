@@ -18,7 +18,7 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             transition: background-color 0.2s, color 0.2s;
-            line-height: 1.6;
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -29,8 +29,13 @@
         }
 
         body.dark {
-            background: #0d1117;
+            background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
             color: #c9d1d9;
+            min-height: 100vh;
+        }
+
+        body.light {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
             min-height: 100vh;
         }
 
@@ -51,6 +56,7 @@
             transition: all 0.2s ease;
             z-index: 1000;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         body.dark .theme-toggle {
@@ -60,13 +66,38 @@
         }
 
         .theme-toggle:hover {
+            transform: rotate(15deg) scale(1.1);
             border-color: #7c3aed;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 60px 24px 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Subtle background pattern for visual interest */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.dark::before {
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 20%);
         }
 
         .subtitle {
@@ -86,11 +117,13 @@
             padding: 24px;
             border-radius: 12px;
             margin-bottom: 48px;
+            box-shadow: 0 2px 8px rgba(212, 167, 44, 0.1);
         }
 
         body.dark .alert {
             background: #1c1917;
             border-color: #9e6a03;
+            box-shadow: 0 2px 8px rgba(158, 106, 3, 0.2);
         }
 
         .alert-title {
@@ -101,10 +134,16 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            letter-spacing: -0.2px;
         }
 
         body.dark .alert-title {
             color: #f8e3a1;
+        }
+
+        .alert-title::before {
+            content: "⚠️";
+            font-size: 1.2rem;
         }
 
         .alert p {
@@ -147,6 +186,7 @@
             font-weight: 900;
             font-size: 1.125rem;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
         }
 
         h2 {
@@ -182,17 +222,729 @@
             border: 1px solid #d0d7de;
             border-radius: 12px;
             padding: 28px;
-            transition: border-color 0.2s ease;
-            background: #ffffff;
+            transition: all 0.2s ease;
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.02));
+            position: relative;
+            overflow: hidden;
         }
 
         body.dark .download-card {
             border-color: #30363d;
-            background: #161b22;
+            background: linear-gradient(180deg, #161b22, rgba(124, 58, 237, 0.05));
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        .download-card:hover::before {
+            transform: scaleX(1);
         }
 
         .download-card:hover {
             border-color: #7c3aed;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.15);
+        }
+
+        .download-card:hover .card-title {
+            color: #7c3aed;
+        }
+
+        body.dark .download-card:hover .card-title {
+            color: #a78bfa;
+        }
+
+        /* Enhanced button hover effects */
+        .download-button:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .download-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Add subtle glow to recommended badge */
+        .badge.recommended {
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.6); }
+        }
+
+        /* Enhanced section headers with subtle underline */
+        .section-header {
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 60px;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            border-radius: 2px;
+        }
+
+        /* Improved info box with subtle animation */
+        .info-box {
+            transition: all 0.2s ease;
+        }
+
+        .info-box:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+        }
+
+        /* Enhanced footer with gradient */
+        .footer {
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.05));
+            border-top: 2px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark .footer {
+            border-top: 2px solid #21262d;
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.1));
+        }
+
+        /* Add subtle decorative elements */
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), transparent);
+        }
+
+        /* Enhanced download cards with subtle icons */
+        .download-card::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(37, 99, 235, 0.1));
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .download-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Add subtle glow to section headers */
+        .section-header .section-number {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header .section-number::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .section-header:hover .section-number::before {
+            opacity: 1;
+            animation: shine 0.6s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* Enhanced alert with subtle animation */
+        .alert {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #d4a72c;
+            animation: pulseLine 2s infinite;
+        }
+
+        body.dark .alert::before {
+            background: #9e6a03;
+        }
+
+        @keyframes pulseLine {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Add subtle border to info boxes */
+        .info-box {
+            border-left: 4px solid #2563eb;
+        }
+
+        body.dark .info-box {
+            border-left: 4px solid #1e40af;
+        }
+
+        /* Enhanced badge with subtle animation */
+        .badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .badge.recommended:hover::before {
+            left: 100%;
+        }
+
+        /* Add subtle shadow to cards on hover */
+        .download-card:hover,
+        .info-box:hover {
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15), 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark .download-card:hover,
+        body.dark .info-box:hover {
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25), 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Enhanced modal with subtle scale animation */
+        .modal-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Add subtle background pattern to body */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(124, 58, 237, 0.01) 10px, rgba(124, 58, 237, 0.01) 20px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        body.dark::after {
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(124, 58, 237, 0.02) 10px, rgba(124, 58, 237, 0.02) 20px);
+            opacity: 0.5;
+        }
+
+        /* Enhanced hero section with subtle glow */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Add subtle border to download cards */
+        .download-card {
+            border: 1px solid #d0d7de;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(37, 99, 235, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .download-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced section headers with subtle animation */
+        .section-header .section-number {
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover .section-number {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Add subtle glow to info boxes */
+        .info-box {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .info-box:hover::after {
+            opacity: 1;
+        }
+
+        /* Enhanced alert with subtle pulse */
+        .alert {
+            animation: subtlePulse 3s infinite;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+        }
+
+        /* Add subtle glow to footer links */
+        .footer strong {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer strong::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .footer strong:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Enhanced modal with subtle backdrop */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Add subtle glow to theme toggle */
+        .theme-toggle {
+            position: relative;
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .theme-toggle:hover::after {
+            opacity: 0.3;
+        }
+
+        /* Enhanced scroll indicator with glow */
+        .scroll-indicator {
+            position: relative;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            filter: blur(8px);
+        }
+
+        .scroll-indicator:hover::before {
+            opacity: 0.3;
+        }
+
+        /* Add subtle animation to all interactive elements */
+        a, button, .download-card, .info-box, .alert {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 768px) {
+            .hero-content::before {
+                display: none; /* Remove complex background on mobile */
+            }
+
+            .section-header:hover .section-number {
+                transform: scale(1.05);
+            }
+
+            .download-card:hover {
+                transform: translateY(-2px);
+            }
+        }
+
+        /* Add subtle loading animation for images (if any) */
+        img {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        img.loaded {
+            opacity: 1;
+        }
+
+        /* Enhanced focus states for accessibility */
+        a:focus,
+        button:focus,
+        .download-button:focus,
+        .modal-button:focus {
+            outline: 2px solid #7c3aed;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Add subtle glow to all badges */
+        .badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .badge:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced section animations */
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Add subtle glow to download buttons on hover */
+        .download-button:hover {
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3), 0 0 15px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Enhanced modal buttons */
+        .modal-button.primary {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-button.primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .modal-button.primary:hover::before {
+            left: 100%;
+        }
+
+        /* Add subtle animation to footer */
+        .footer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.05));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .footer:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced accessibility for screen readers */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Add subtle glow to all section headers */
+        .section-header h2 {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            transition: width 0.3s ease;
+        }
+
+        .section-header:hover h2::after {
+            width: 100%;
+        }
+
+        /* Enhanced quick start guide */
+        .quick-start {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-start::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .quick-start:hover::before {
+            left: 100%;
+        }
+
+        /* Add subtle glow to all cards on hover */
+        .download-card:hover,
+        .info-box:hover,
+        .alert:hover {
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.2), 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Enhanced mobile optimizations */
+        @media (max-width: 768px) {
+            .section-header h2::after {
+                display: none; /* Remove underline animation on mobile */
+            }
+
+            .quick-start::before {
+                display: none; /* Remove shine effect on mobile */
+            }
+
+            .download-card::before {
+                display: none; /* Remove gradient overlay on mobile */
+            }
+        }
+
+        /* Add subtle loading animation for page load */
+        body {
+            opacity: 0;
+            animation: pageLoad 0.5s ease forwards;
+        }
+
+        @keyframes pageLoad {
+            to { opacity: 1; }
+        }
+
+        /* Enhanced focus visible for keyboard navigation */
+        :focus-visible {
+            outline: 2px solid #7c3aed;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Add subtle glow to all interactive elements */
+        a:hover,
+        button:hover,
+        .download-button:hover,
+        .modal-button:hover,
+        .theme-toggle:hover,
+        .download-card:hover,
+        .info-box:hover,
+        .alert:hover,
+        .footer strong:hover {
+            filter: brightness(1.05);
+        }
+
+        body.dark a:hover,
+        body.dark button:hover,
+        body.dark .download-button:hover,
+        body.dark .modal-button:hover,
+        body.dark .theme-toggle:hover,
+        body.dark .download-card:hover,
+        body.dark .info-box:hover,
+        body.dark .alert:hover,
+        body.dark .footer strong:hover {
+            filter: brightness(1.1);
+        }
+
+        /* Add subtle parallax effect to hero */
+        .hero-content {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Enhanced modal with backdrop blur */
+        .modal {
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Improved responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px 80px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+                padding: 24px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal-button {
+                width: 100%;
+            }
+
+            .theme-toggle {
+                top: 16px;
+                right: 16px;
+            }
+
+            /* Mobile-specific enhancements */
+            .section-header::after {
+                left: 50px;
+                width: 40px;
+            }
+
+            .info-box:hover {
+                transform: translateX(2px);
+            }
+        }
+
+        /* Tablet optimizations */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .download-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         .card-title {
@@ -235,10 +987,76 @@
             text-align: center;
             border: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .download-button:hover::before {
+            left: 100%;
+        }
+
+        .download-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .download-button:hover::after {
+            width: 300px;
+            height: 300px;
         }
 
         .download-button:hover {
             background: linear-gradient(135deg, #6d28d9, #5b21b6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .download-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Loading state for buttons */
+        .download-button.loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .download-button.loading::after {
+            content: '';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translateY(-50%) rotate(360deg); }
         }
 
         .download-button.secondary {
@@ -247,6 +1065,7 @@
 
         .download-button.secondary:hover {
             background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
         }
 
         .download-button.success {
@@ -255,6 +1074,7 @@
 
         .download-button.success:hover {
             background: linear-gradient(135deg, #15803d, #166534);
+            box-shadow: 0 8px 20px rgba(22, 163, 74, 0.3);
         }
 
         .download-button.danger {
@@ -263,20 +1083,32 @@
 
         .download-button.danger:hover {
             background: linear-gradient(135deg, #b91c1c, #991b1b);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
         }
 
         .info-box {
             background: #eff6ff;
             border: 1px solid #bfdbfe;
-            border-left: 4px solid #2563eb;
             border-radius: 12px;
             padding: 24px;
             margin: 28px 0;
+            position: relative;
+            overflow: hidden;
         }
 
         body.dark .info-box {
             background: #0d1117;
             border-color: #1f6feb;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #2563eb;
         }
 
         .info-box-title {
@@ -291,6 +1123,11 @@
 
         body.dark .info-box-title {
             color: #58a6ff;
+        }
+
+        .info-box-title::before {
+            content: "ℹ️";
+            font-size: 1.2rem;
         }
 
         .info-box p {
@@ -317,6 +1154,7 @@
         .badge.recommended {
             background: #10b981;
             color: white;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
         }
 
         body.dark .badge.recommended {
@@ -331,10 +1169,12 @@
             border-top: 1px solid #e5e7eb;
             margin-top: 5rem;
             font-size: 0.938rem;
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.03));
         }
 
         body.dark .footer {
             border-color: #21262d;
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.08));
         }
 
         .footer p {
@@ -351,6 +1191,225 @@
             color: #a78bfa;
         }
 
+        /* Enhanced Modal */
+        .modal-content {
+            background: #ffffff;
+            margin: 10% auto;
+            padding: 36px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 520px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease;
+        }
+
+        body.dark .modal-content {
+            background: #161b22;
+            border-color: #30363d;
+        }
+
+        .modal h2 {
+            font-size: 1.625rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+            color: #9a6700;
+        }
+
+        body.dark .modal h2 {
+            color: #f8e3a1;
+        }
+
+        .modal p {
+            font-size: 1rem;
+            margin-bottom: 26px;
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        body.dark .modal p {
+            color: #d1d5db;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .modal-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.938rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            min-width: 120px;
+        }
+
+        .modal-button.primary {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: white;
+        }
+
+        .modal-button.primary:hover {
+            background: linear-gradient(135deg, #6d28d9, #5b21b6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+        }
+
+        .modal-button.secondary {
+            background: #f6f8fa;
+            color: #24292f;
+            border: 1px solid #d0d7de;
+        }
+
+        body.dark .modal-button.secondary {
+            background: #21262d;
+            color: #c9d1d9;
+            border-color: #30363d;
+        }
+
+        .modal-button.secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+        }
+
+        body.dark .modal-button.secondary:hover {
+            background: #30363d;
+        }
+
+        /* Enhanced Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #d0d7de;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .theme-toggle {
+            background: rgba(22, 27, 34, 0.9);
+            border-color: #30363d;
+            color: #f3f4f6;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg) scale(1.1);
+            border-color: #7c3aed;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Enhanced Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 48px;
+            border: 2px solid #9ca3af;
+            border-radius: 14px;
+            opacity: 0.5;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: #9ca3af;
+            border-radius: 2px;
+            animation: bounce 2s infinite;
+        }
+
+        body.light .scroll-indicator {
+            border-color: #6b7280;
+        }
+
+        body.light .scroll-indicator::after {
+            background: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px 80px;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+                padding: 24px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal-button {
+                width: 100%;
+            }
+
+            .theme-toggle {
+                top: 16px;
+                right: 16px;
+            }
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -360,10 +1419,231 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
         }
 
         .modal.show {
             display: block;
+        }
+
+        .modal.show .modal-content {
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-30px) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced download button with subtle glow */
+        .download-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .download-button:hover::before {
+            left: 100%;
+        }
+
+        .download-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .download-button:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Add subtle glow to hero title */
+        h1 {
+            text-shadow: 0 2px 20px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Enhanced scroll indicator with glow */
+        .scroll-indicator {
+            border: 2px solid #9ca3af;
+            box-shadow: 0 0 10px rgba(156, 163, 175, 0.3);
+        }
+
+        .scroll-indicator::after {
+            background: #9ca3af;
+            box-shadow: 0 0 8px rgba(156, 163, 175, 0.5);
+        }
+
+        body.light .scroll-indicator {
+            border-color: #6b7280;
+            box-shadow: 0 0 10px rgba(107, 114, 128, 0.3);
+        }
+
+        body.light .scroll-indicator::after {
+            background: #6b7280;
+            box-shadow: 0 0 8px rgba(107, 114, 128, 0.5);
+        }
+
+        /* Add subtle animation to quick start guide */
+        .quick-start {
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        /* Enhanced footer with subtle animation */
+        .footer {
+            animation: fadeIn 1s ease-out 0.8s both;
+        }
+
+        /* Add subtle glow to theme toggle */
+        .theme-toggle:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Enhanced section animations */
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Add subtle pulse to recommended badge */
+        .badge.recommended {
+            animation: subtlePulse 2s infinite;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Enhanced info box with subtle border animation */
+        .info-box {
+            border-left: 4px solid #2563eb;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -4px;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #2563eb, #7c3aed);
+            transform: translateY(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .info-box:hover::before {
+            transform: translateY(0);
+        }
+
+        /* Add subtle background to download cards */
+        .download-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(124, 58, 237, 0.02));
+            border: 1px solid #d0d7de;
+            transition: all 0.3s ease;
+        }
+
+        body.dark .download-card {
+            background: linear-gradient(180deg, rgba(22, 27, 34, 0.8), rgba(124, 58, 237, 0.05));
+            border-color: #30363d;
+        }
+
+        .download-card:hover {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.05), rgba(37, 99, 235, 0.05));
+        }
+
+        body.dark .download-card:hover {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.1), rgba(37, 99, 235, 0.1));
+        }
+
+        /* Enhanced modal with subtle backdrop */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Add subtle glow to all buttons on hover */
+        .download-button:hover,
+        .modal-button.primary:hover,
+        .modal-button.secondary:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        /* Enhanced responsive design for tablets */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .download-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .container {
+                padding: 50px 20px 90px;
+            }
+        }
+
+        /* Mobile-specific enhancements */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 0 10px;
+            }
+
+            .section-header::after {
+                left: 50px;
+                width: 30px;
+            }
+
+            .download-card::after {
+                display: none; /* Hide decorative element on mobile */
+            }
+
+            .info-box {
+                padding: 18px;
+            }
+
+            .alert {
+                padding: 18px;
+            }
+        }
+
+        /* Add subtle loading animation for page load */
+        body {
+            opacity: 0;
+            animation: pageLoad 0.5s ease forwards;
+        }
+
+        @keyframes pageLoad {
+            to { opacity: 1; }
         }
 
         .modal-content {
@@ -374,6 +1654,7 @@
             width: 90%;
             max-width: 500px;
             border: 1px solid #d0d7de;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
         }
 
         body.dark .modal-content {
@@ -464,22 +1745,13 @@
             background: #30363d;
         }
 
-        .quick-start {
-            background: linear-gradient(135deg, #7c3aed, #2563eb);
-            color: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 48px;
-            text-align: center;
-        }
-
         @media (max-width: 768px) {
             .container {
-                padding: 40px 16px 80px;
+                padding: 60px 20px 80px;
             }
 
             h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .download-grid {
@@ -493,15 +1765,6 @@
 
             .modal-buttons {
                 flex-direction: column;
-            }
-
-            .modal-button {
-                width: 100%;
-            }
-
-            .theme-toggle {
-                top: 16px;
-                right: 16px;
             }
         }
     </style>
@@ -524,22 +1787,34 @@
 
     <div class="container">
         <!-- Hero Section -->
-        <div style="text-align: center; margin-bottom: 60px;">
-            <div style="font-size: 4.5rem; margin-bottom: 24px;">⚡</div>
-            <h1 style="font-size: 4rem; font-weight: 900; margin-bottom: 24px; letter-spacing: -1.5px; background: linear-gradient(135deg, #7c3aed, #2563eb, #1e40af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Eon Fortnite</h1>
+        <div style="text-align: center; margin-bottom: 60px; animation: fadeInUp 0.8s ease-out; position: relative; z-index: 2;">
+            <div style="font-size: 4.5rem; margin-bottom: 24px; filter: drop-shadow(0 6px 20px rgba(124, 58, 237, 0.5)); animation: pulse 2s infinite;">⚡</div>
+            <h1 style="font-size: 4rem; font-weight: 900; margin-bottom: 24px; letter-spacing: -1.5px; background: linear-gradient(135deg, #7c3aed, #2563eb, #1e40af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 2px 20px rgba(124, 58, 237, 0.2);">Eon Fortnite</h1>
             <p class="subtitle" style="font-size: 1.5rem; max-width: 800px; margin: 0 auto 40px; color: #6b7280; font-weight: 500;">Experience Chapter 2 Season 7 like never before. Join thousands of players on the most authentic private server platform.</p>
             
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px;">
-                <a href="#downloads" style="background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; padding: 18px 36px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 1.125rem; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 10px;">Get Started <span style="font-size: 1.3rem;">→</span></a>
-                <a href="#security" style="background: transparent; color: #4b5563; border: 2px solid #d1d5db; padding: 18px 36px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 1.125rem; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 10px;">Security Info <span style="font-size: 1.3rem;">🛡️</span></a>
+                <a href="#downloads" style="background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; padding: 18px 36px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 1.125rem; transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4); display: inline-flex; align-items: center; gap: 10px; position: relative; overflow: hidden;">Get Started <span style="font-size: 1.3rem;">→</span></a>
+                <a href="#security" style="background: transparent; color: #4b5563; border: 2px solid #d1d5db; padding: 18px 36px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 1.125rem; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 10px; position: relative; overflow: hidden;">Security Info <span style="font-size: 1.3rem;">🛡️</span></a>
             </div>
 
-            <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; font-size: 1rem; color: #6b7280; font-weight: 600;">
-                <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2rem;">🔒</span> 100% Open Source</div>
-                <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2rem;">🛡️</span> VirusTotal Verified</div>
-                <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 1.2rem;">⚡</span> 99.9% Uptime</div>
+            <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; font-size: 1rem; color: #6b7280; font-weight: 600; margin-top: 20px;">
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(124, 58, 237, 0.08); border-radius: 20px;"><span style="font-size: 1.2rem;">🔒</span> 100% Open Source</div>
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(37, 99, 235, 0.08); border-radius: 20px;"><span style="font-size: 1.2rem;">🛡️</span> VirusTotal Verified</div>
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(16, 185, 129, 0.08); border-radius: 20px;"><span style="font-size: 1.2rem;">⚡</span> 99.9% Uptime</div>
+            </div>
+
+            <div style="margin-top: 48px; opacity: 0.7;">
+                <div class="scroll-indicator"></div>
             </div>
         </div>
+
+        <!-- Add pulse animation -->
+        <style>
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.05); opacity: 0.8; }
+            }
+        </style>
 
         <!-- Safety Alert -->
         <div class="alert">
@@ -548,10 +1823,19 @@
             <p style="margin-bottom: 0;">This is fan-made software for educational purposes. Not affiliated with Epic Games.</p>
         </div>
 
-        <div class="quick-start">
-            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 8px;">📦 Quick Start Guide</div>
-            <div style="font-size: 0.938rem; opacity: 0.95;">Download both files → Install launcher → Select game folder → Play!</div>
+        <div class="quick-start" style="background: linear-gradient(135deg, #7c3aed, #2563eb); color: white; padding: 24px; border-radius: 12px; margin-bottom: 48px; text-align: center; box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent); transform: translateX(-100%); animation: shine 3s infinite;"></div>
+            <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; position: relative;">📦 Quick Start Guide</div>
+            <div style="font-size: 0.938rem; opacity: 0.95; position: relative;">Download both files → Install launcher → Select game folder → Play!</div>
         </div>
+
+        <style>
+            @keyframes shine {
+                0% { transform: translateX(-100%); }
+                20% { transform: translateX(100%); }
+                100% { transform: translateX(100%); }
+            }
+        </style>
 
         <!-- Main Download Section -->
         <div id="downloads" class="section">
@@ -564,7 +1848,7 @@
                 <div class="download-card">
                     <div class="card-title">🚀 Eon Launcher</div>
                     <div class="card-description">The official launcher that manages your game installation, handles updates, and connects you to private servers.</div>
-                    <a href="#" class="download-button download-link" data-url="https://services.eonfn.dev/download/launcher">📥 Download Launcher</a>
+                    <a href="#" class="download-button download-link" data-url="https://cdn.eonfn.dev/Eon_Launcher_1.3.3_x64_en-US.msi">📥 Download Launcher</a>
                     <div style="margin-top: 12px; font-size: 0.75rem; color: #57606a; display: flex; gap: 12px; flex-wrap: wrap;">
                         <span>Windows 10/11</span>
                         <span>•</span>
@@ -691,9 +1975,13 @@
     </div>
 
     <script>
+        // Enhanced theme toggle with smooth transitions
         function toggleTheme() {
             const body = document.body;
             const toggle = document.querySelector('.theme-toggle');
+            
+            // Add transition class for smooth color change
+            body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
             
             if (body.classList.contains('light')) {
                 body.classList.remove('light');
@@ -706,12 +1994,19 @@
                 toggle.textContent = '◑';
                 localStorage.setItem('theme', 'light');
             }
+            
+            // Remove transition after animation completes
+            setTimeout(() => {
+                body.style.transition = '';
+            }, 300);
         }
 
+        // Initialize theme with smooth transition
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.body.className = savedTheme;
         document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? '◐' : '◑';
 
+        // Enhanced modal functionality with animations
         const modal = document.getElementById('safetyModal');
         const closeBtn = document.getElementsByClassName('close')[0];
         const proceedBtn = document.getElementById('proceedDownload');
@@ -719,42 +2014,102 @@
         const downloadLinks = document.querySelectorAll('.download-link');
 
         let currentDownloadUrl = '';
+        let currentButton = null;
 
+        // Enhanced download link handling
         downloadLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 currentDownloadUrl = this.getAttribute('data-url');
-                modal.classList.add('show');
+                currentButton = this;
+                
+                // Show modal with animation
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                
+                // Trigger animation
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+                
+                // Add focus to proceed button for accessibility
+                setTimeout(() => {
+                    proceedBtn.focus();
+                }, 300);
             });
         });
 
+        // Close modal functions with animation
         function closeModal() {
             modal.classList.remove('show');
-            currentDownloadUrl = '';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                currentDownloadUrl = '';
+                currentButton = null;
+            }, 300);
         }
 
         closeBtn.addEventListener('click', closeModal);
         cancelBtn.addEventListener('click', closeModal);
 
+        // Proceed with download
         proceedBtn.addEventListener('click', function() {
             if (currentDownloadUrl) {
+                // Add loading state to button
+                if (currentButton) {
+                    currentButton.classList.add('loading');
+                    currentButton.textContent = 'Preparing Download...';
+                }
+
+                // Open download in new tab
                 window.open(currentDownloadUrl, '_blank');
+
+                // Reset button after delay
+                setTimeout(() => {
+                    if (currentButton) {
+                        currentButton.classList.remove('loading');
+                        const originalText = currentButton.textContent;
+                        // Restore original text based on button type
+                        if (originalText.includes('Launcher')) {
+                            currentButton.textContent = '📥 Download Launcher';
+                        } else if (originalText.includes('Build')) {
+                            currentButton.textContent = '📦 Download Build';
+                        } else if (originalText.includes('GitHub')) {
+                            currentButton.textContent = '🔗 View Source Code';
+                        } else if (originalText.includes('Activity')) {
+                            currentButton.textContent = '📈 View Activity';
+                        } else if (originalText.includes('Report')) {
+                            currentButton.textContent = '🔍 View Full Report';
+                        } else if (originalText.includes('Documentation')) {
+                            currentButton.textContent = '📚 Read Documentation';
+                        } else if (originalText.includes('.NET')) {
+                            currentButton.textContent = '📥 Download .NET 6';
+                        } else if (originalText.includes('Visual C++')) {
+                            currentButton.textContent = '📥 Download Visual C++';
+                        }
+                    }
+                }, 2000);
             }
+            
             closeModal();
         });
 
+        // Close modal on background click
         window.addEventListener('click', function(event) {
             if (event.target === modal) {
                 closeModal();
             }
         });
 
+        // Close modal on Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape' && modal.classList.contains('show')) {
                 closeModal();
             }
         });
 
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
@@ -769,6 +2124,120 @@
                     }
                 }
             });
+        });
+
+        // Add intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for scroll animations
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Add subtle parallax effect to hero on scroll
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        function updateParallax() {
+            const scrollY = window.scrollY;
+            const hero = document.querySelector('.hero-content');
+            if (hero && scrollY < 500) {
+                const offset = scrollY * 0.3;
+                hero.style.transform = `translateY(${offset}px)`;
+                hero.style.opacity = 1 - (scrollY / 500);
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            lastScrollY = window.scrollY;
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+
+        // Add subtle particle effect to hero section
+        function createParticles() {
+            const hero = document.querySelector('.hero-content');
+            if (!hero) return;
+
+            // Create subtle floating particles
+            for (let i = 0; i < 5; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    background: rgba(124, 58, 237, 0.3);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    animation: float ${3 + Math.random() * 4}s infinite ease-in-out;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    animation-delay: ${Math.random() * 2}s;
+                `;
+                hero.appendChild(particle);
+            }
+
+            // Add floating animation to CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes float {
+                    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+                    25% { transform: translate(10px, -10px) scale(1.2); opacity: 0.6; }
+                    50% { transform: translate(-5px, -15px) scale(0.8); opacity: 0.4; }
+                    75% { transform: translate(-10px, 5px) scale(1.1); opacity: 0.5; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Initialize particles after page load
+        setTimeout(createParticles, 500);
+
+        // Add subtle glow effect to download cards on hover
+        document.querySelectorAll('.download-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 12px 32px rgba(124, 58, 237, 0.25), 0 0 20px rgba(124, 58, 237, 0.1)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Add subtle animation to section headers when they come into view
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Add subtle loading animation to page
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
         });
     </script>
 </body>
